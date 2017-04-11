@@ -1,11 +1,13 @@
 
-var manualControl = false;
+var manualControl = true;
 var longitude = 0;
 var latitude = 0;
 var savedX;
 var savedY;
 var savedLongitude;
 var savedLatitude;
+var pointX, pointY;
+var canvasWrap = document.querySelector('#canvas_wrap');
 
 // panoramas background
 var panoramasArray = ["01.jpg"];
@@ -13,10 +15,10 @@ var panoramaNumber = Math.floor(Math.random()*panoramasArray.length);
 
 // setting up the renderer
 renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+renderer.setSize(canvasWrap.offsetWidth, canvasWrap.offsetHeight);
+canvasWrap.appendChild(renderer.domElement);
 
-// creating a new scene
+// creating a new scen
 var scene = new THREE.Scene();
 
 // adding a camera
@@ -36,12 +38,19 @@ var sphereMesh = new THREE.Mesh(sphere, sphereMaterial);
 scene.add(sphereMesh);
 
 // listeners
-document.addEventListener("mousedown", onDocumentMouseDown, false);
-document.addEventListener("mousemove", onDocumentMouseMove, false);
-document.addEventListener("mouseup", onDocumentMouseUp, false);
-document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
-document.addEventListener( 'DOMMouseScroll', onDocumentMouseWheel, false);
+canvasWrap.addEventListener("mousemove", onDocumentMouseMove, false);
+canvasWrap.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
+canvasWrap.addEventListener( 'DOMMouseScroll', onDocumentMouseWheel, false);
 window.addEventListener( 'resize', onWindowResize, false );
+
+$('#canvas_wrap').bind('touchmove', function(e) {
+    e.preventDefault();
+    var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+    pointX = touch.pageX;
+    pointY = touch.pageY;
+    longitude = pointX / canvasWrap.offsetWidth * 360;
+    latitude = 50 + (pointY / canvasWrap.offsetHeight * (-100));
+})
 
 render();
 
@@ -49,7 +58,7 @@ function render(){
     requestAnimationFrame(render);
 
     if(!manualControl){
-        longitude += 0.1;
+        // longitude += 0.1;
     }
 
     // limiting latitude from -85 to 85 (cannot point to the sky or under your feet)
@@ -61,35 +70,30 @@ function render(){
     camera.target.z = 500 * Math.sin(THREE.Math.degToRad(90 - latitude)) * Math.sin(THREE.Math.degToRad(longitude));
     camera.lookAt(camera.target);
 
-    // calling again render function
     renderer.render(scene, camera);
+
 }
 
-// when the mouse is pressed, we switch to manual control and save current coordinates
-function onDocumentMouseDown(event){
-    event.preventDefault();
-
-    manualControl = true;
-
-    savedX = event.clientX;
-    savedY = event.clientY;
-
-    savedLongitude = longitude;
-    savedLatitude = latitude;
-}
 
 // when the mouse moves, if in manual contro we adjust coordinates
 function onDocumentMouseMove(event){
+    // manualControl = false;
     if(manualControl){
-        longitude = (savedX - event.clientX) * 0.1 + savedLongitude;
-        latitude = (event.clientY - savedY) * 0.1 + savedLatitude;
+
+        // pointX = event.offsetX || event.jhhggh || 0;
+        pointX = event.offsetX;
+        pointY = event.offsetY;
+        longitude = pointX / canvasWrap.offsetWidth * 360;
+        latitude = 50 + (pointY / canvasWrap.offsetHeight * (-100));
+
+        
     }
 }
 
 // when the mouse is released, we turn manual control off
-function onDocumentMouseUp(event){
-    manualControl = false;
-}
+// function onDocumentMouseUp(event){
+//     manualControl = true;
+// }
 
 function onDocumentMouseWheel( event ) {
     if ( event.wheelDeltaY ) { // WebKit
@@ -105,9 +109,10 @@ function onDocumentMouseWheel( event ) {
 }
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = canvasWrap.offsetWidth / canvasWrap.offsetHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( canvasWrap.offsetWidth, canvasWrap.offsetHeight );
+    console.log(canvasWrap.offsetWidth);
 }
 
 // pressing a key (actually releasing it) changes the texture map
