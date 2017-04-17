@@ -1,0 +1,99 @@
+@font-face{font-family:TahomaRegular;src:url(fonts/TahomaRegular.ttf);font-weight:400;font-style:normal}@font-face{font-family:TahomaBold;src:url(fonts/TahomaBold.ttf);font-weight:700;font-style:normal}
+.clearfix:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.transition_contact {
+  height: 65px;
+  background: linear-gradient(to bottom, #2d2d2d, #4c4c4c);
+}
+.contact {
+  background-image: url('img/contact_bg.png');
+  background-size: contain;
+  padding: 40px 0;
+  min-height: 100vh;
+}
+.contact .contact_us {
+  margin: 100px 0;
+}
+.contact .contact_us h3 {
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  font-family: 'TahomaBold';
+  margin-bottom: 50px;
+}
+.contact .contact_us form input {
+  display: block;
+  margin: 15px auto;
+  background-color: #212121;
+  border: none;
+  color: white;
+  padding: 7px;
+  font-size: 20px;
+  font-family: 'TahomaRegular';
+  width: 340px;
+}
+.contact .contact_us form input.ng-pristine{
+	border: 2px solid yellow;
+}
+.contact .contact_us form input.ng-invalid.ng-dirty{
+	border: 2px solid red;
+}
+.contact .contact_us form input.ng-valid.ng-dirty{
+	border: 2px solid green;
+}
+.contact .contact_us form input.ng-invalid-email{
+	color: red;
+}
+.contact .contact_us form p{
+	color: white;
+}
+.contact .contact_us form button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 30px;
+  color: white;
+  border: none;
+  font-family: "TahomaBold";
+  font-size: 18px;
+  margin-top: 60px;
+}
+.contact .contact_us form button.disabled{
+	background-color: grey;
+}
+.contact .contact_us form button.active{
+	background-color: orange;
+}
+.contact .contact_us form button.disabled:hover {
+  background-color: darkgrey;
+}
+.contact .contact_us form button.active:hover {
+  background-color: #ffb01f;
+}
+.contact .contact_us form button:active {
+  background-color: #e09100;
+}
+.contact .mobile_number {
+  margin-top: 150px;
+}
+.contact .mobile_number h2 {
+  text-align: center;
+  font-size: 40px;
+  margin: 30px 0;
+  position: relative;
+  color: orange;
+  font-family: "TahomaBold";
+}
+.contact .mobile_number h2:before {
+  content: '';
+  position: absolute;
+  background-image: url('img/icon_phone.png');
+  width: 33px;
+  height: 40px;
+  left: 0;
+  top: 5px;
+}

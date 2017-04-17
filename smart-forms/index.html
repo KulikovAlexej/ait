@@ -3,13 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Умные формы</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
     <script type="application/javascript" src="angular.js"></script>
     <script type="application/javascript" src="angular-route.js"></script>
     <script type="application/javascript" src="index.js"></script>
 </head>
-<body ng-controller="Main">
-    {{2+3}}<br />
-    {{message}}
+<body>
+<section class="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="contact_us">
+                    <h3>Обратная связь</h3>
+                    <form action="" name='contacts' novalidate ng-controller='Form'>
+                        <input type="{{ input.type }}" ng-repeat='input in inputs' ng-model='input.value' ng-show='{{ input.visible }}' name='{{ input.name }}' placeholder="{{ input.placeholder }}" ng-minlength='{{ input.minLength }}' ng-maxlength='{{ input.maxLength }}' ng-blur='checking(input, contacts)' ng-pattern='input.pattern'>
+                        <p ng-repeat='input in inputs'>{{ contacts.input.$invalid}}</p>
+                        <button class='disabled' type="submit">Заказать звонок</button>
+                        <h1>{{ contacts.userPhone.$valid ? 5 : 2}}</h1>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class='mobile_number' ng-controller='Phones'>
+                    <h2 ng-repeat='phone in phones | filter:{status: true}' ng-click='func()'>{{ phone.number }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>
