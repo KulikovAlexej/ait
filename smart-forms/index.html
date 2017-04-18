@@ -17,7 +17,7 @@
                 <div class="contact_us">
                     <h3>Обратная связь</h3>
                     <form action="" name='contacts' novalidate ng-controller='Form'>
-                        <input type="{{ input.type }}" ng-repeat='input in inputs' ng-model='input.value' ng-show='{{ input.visible }}' name='{{ input.name }}' placeholder="{{ input.placeholder }}" ng-minlength='{{ input.minLength }}' ng-maxlength='{{ input.maxLength }}' ng-blur='checking(input, contacts)' ng-pattern='input.pattern'>
+                        <input type="{{ input.type }}" ng-repeat='input in inputs' ng-model='input.value' ng-show='input.visible' name='{{ input.name }}' placeholder="{{ input.placeholder }}" ng-minlength='{{ input.minLength }}' ng-maxlength='{{ input.maxLength }}' ng-blur='checking(input, contacts)' ng-pattern='input.pattern'>
                         <p ng-repeat='input in inputs'>{{ contacts.input.$invalid}}</p>
                         <button class='disabled' type="submit">Заказать звонок</button>
                         <h1>{{ contacts.userPhone.$valid ? 5 : 2}}</h1>

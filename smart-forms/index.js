@@ -16,6 +16,7 @@ APP.controller('Form', function($scope, $locale) {
 				if($scope.contacts.userPhone.$valid && $scope.contacts.userPhone.$dirty){
 					console.log('Сейчас я сделаю видимым второй инпут');
 					$scope.inputs[1].visible = true;
+					console.log('видимость второго ' + $scope.inputs[1].visible);
 				}
 				break;
 			case "userName":
